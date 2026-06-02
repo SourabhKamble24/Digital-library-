@@ -4,7 +4,7 @@ const jwt = require('jsonwebtoken');
 
 exports.signup = async (req, res) => {
   try {
-    const { name, email, password } = req.body;
+    const { name, email, password, role, mobile_no } = req.body;
 
     // Check if user exists
     const userCheck = await db.query('SELECT * FROM users WHERE email = $1', [email]);
@@ -16,10 +16,13 @@ exports.signup = async (req, res) => {
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(password, salt);
 
+    // Validate role
+    const userRole = role === 'ADMIN' ? 'ADMIN' : 'MEMBER';
+
     // Insert user
     const newUser = await db.query(
-      'INSERT INTO users (name, email, password) VALUES ($1, $2, $3) RETURNING id, name, email, role',
-      [name, email, hashedPassword]
+      'INSERT INTO users (name, email, password, role, mobile_no) VALUES ($1, $2, $3, $4, $5) RETURNING id, name, email, role, mobile_no',
+      [name, email, hashedPassword, userRole, mobile_no]
     );
 
     const user = newUser.rows[0];

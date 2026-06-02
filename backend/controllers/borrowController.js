@@ -118,3 +118,21 @@ exports.getHistory = async (req, res) => {
     res.status(500).send('Server Error');
   }
 };
+
+// Get all borrow history (Admin)
+exports.getAllHistory = async (req, res) => {
+  try {
+    const result = await db.query(`
+      SELECT r.*, u.name as user_name, u.email as user_email, u.mobile_no as user_mobile, b.title, b.author, b.cover_image 
+      FROM borrow_records r
+      JOIN users u ON r.user_id = u.id
+      JOIN books b ON r.book_id = b.id
+      ORDER BY r.borrow_date DESC
+    `);
+
+    res.json(result.rows);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send('Server Error');
+  }
+};

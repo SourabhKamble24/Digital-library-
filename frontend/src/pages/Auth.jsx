@@ -7,7 +7,7 @@ const Auth = () => {
   const location = useLocation();
   const isLogin = location.pathname === '/login';
   
-  const [formData, setFormData] = useState({ name: '', email: '', password: '' });
+  const [formData, setFormData] = useState({ name: '', email: '', password: '', role: 'MEMBER', mobile_no: '' });
   const [error, setError] = useState('');
   
   const { login, signup } = useContext(AuthContext);
@@ -24,7 +24,7 @@ const Auth = () => {
       if (isLogin) {
         await login(formData.email, formData.password);
       } else {
-        await signup(formData.name, formData.email, formData.password);
+        await signup(formData.name, formData.email, formData.password, formData.role, formData.mobile_no);
       }
       navigate('/');
     } catch (err) {
@@ -72,17 +72,44 @@ const Auth = () => {
 
           <form className="space-y-5" onSubmit={handleSubmit}>
             {!isLogin && (
-              <div>
-                <label className="block text-sm font-medium text-gray-700">Full Name</label>
-                <input
-                  name="name"
-                  type="text"
-                  required
-                  className="mt-1 appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-                  value={formData.name}
-                  onChange={handleChange}
-                />
-              </div>
+              <>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700">Full Name</label>
+                  <input
+                    name="name"
+                    type="text"
+                    required
+                    className="mt-1 appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                    value={formData.name}
+                    onChange={handleChange}
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700">Role</label>
+                  <select
+                    name="role"
+                    className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                    value={formData.role}
+                    onChange={handleChange}
+                  >
+                    <option value="MEMBER">Student</option>
+                    <option value="ADMIN">Admin</option>
+                  </select>
+                </div>
+                {formData.role === 'MEMBER' && (
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700">Mobile No</label>
+                    <input
+                      name="mobile_no"
+                      type="tel"
+                      required
+                      className="mt-1 appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                      value={formData.mobile_no}
+                      onChange={handleChange}
+                    />
+                  </div>
+                )}
+              </>
             )}
             
             <div>

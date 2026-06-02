@@ -56,11 +56,10 @@ const Home = () => {
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
       
-      {/* Header Section */}
       <div className="bg-blue-600 rounded-2xl p-8 mb-8 text-white shadow-lg">
         <h1 className="text-4xl font-bold mb-4">Welcome to the Digital Library</h1>
         <p className="text-blue-100 text-lg max-w-2xl">
-          Explore our vast collection of books across various categories. Borrow your favorites and start reading today!
+          Explore our vast collection of books across various categories. Issue your favorites and start reading today!
         </p>
       </div>
 

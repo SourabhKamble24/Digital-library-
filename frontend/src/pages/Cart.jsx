@@ -35,7 +35,7 @@ const Cart = () => {
   const handleCheckout = async () => {
     try {
       await api.post('/borrow/checkout');
-      alert('Checkout successful! Books borrowed for 14 days.');
+      alert('Checkout successful! Books issued for 14 days.');
       navigate('/dashboard');
     } catch (err) {
       alert(err.response?.data?.msg || 'Error during checkout');
@@ -93,7 +93,7 @@ const Cart = () => {
               onClick={handleCheckout}
               className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-lg font-bold shadow-md transition-colors"
             >
-              Checkout & Borrow
+              Checkout & Issue
             </button>
           </div>
         </div>

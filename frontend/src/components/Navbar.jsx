@@ -39,7 +39,7 @@ const Navbar = () => {
                 </Link>
                 <Link to="/dashboard" className="text-gray-600 hover:text-blue-600 transition-colors flex items-center gap-1">
                   <User className="h-5 w-5" />
-                  <span className="font-medium">My Books</span>
+                  <span className="font-medium">{user.role === 'ADMIN' ? 'Admin Dashboard' : 'My Books'}</span>
                 </Link>
                 <button 
                   onClick={handleLogout}
